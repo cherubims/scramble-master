@@ -1,28 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, StyleSheet, Animated } from "react-native";
+import { View, Text, Image, Animated, StyleSheet } from "react-native";
 
 const SplashScreen = ({ onFinish }) => {
-  const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity: 0
+  const [fadeAnim] = useState(new Animated.Value(0)); // For splash screen fade-in and fade-out
+  const fullText = "Scramble Master"; // The full text to spell out
+  const typingSpeed = 200; // Typing speed in milliseconds per letter
+  const letterFades = fullText.split("").map(() => new Animated.Value(0)); // Fade values for each letter
 
   useEffect(() => {
-    // Start the animation
+    // Fade in the splash screen
     Animated.timing(fadeAnim, {
-      toValue: 1, // End opacity: 1
-      duration: 2000, // 2 seconds
+      toValue: 1,
+      duration: 2000,
       useNativeDriver: true,
-    }).start(() => {
-      // After animation ends, trigger onFinish
-      setTimeout(onFinish, 1500); // Wait an additional 1.5 seconds before navigating
+    }).start();
+
+    // Start the letter-by-letter fade-in animation
+    fullText.split("").forEach((_, index) => {
+      setTimeout(() => {
+        Animated.timing(letterFades[index], {
+          toValue: 1,
+          duration: 500, // Visible fade-in duration for each letter
+          useNativeDriver: true,
+        }).start();
+      }, typingSpeed * index);
     });
-  }, [fadeAnim, onFinish]);
+
+    // Fade out the splash screen after the text finishes animating
+    const totalAnimationTime = typingSpeed * fullText.length + 1000; // Account for animation + 1-second pause
+    setTimeout(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1500,
+        useNativeDriver: true,
+      }).start(() => onFinish()); // Navigate to the next screen after fade-out
+    }, totalAnimationTime);
+  }, [fadeAnim, letterFades, onFinish]);
 
   return (
-    <View style={styles.container}>
-      <Animated.Image
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <View style={styles.textContainer}>
+        {fullText.split("").map((char, index) => (
+          <Animated.Text
+            key={index}
+            style={[styles.typingText, { opacity: letterFades[index] }]}
+          >
+            {char}
+          </Animated.Text>
+        ))}
+      </View>
+      <Image
         source={require("../assets/splash-screen.jpeg")}
-        style={[styles.logo, { opacity: fadeAnim }]}
+        style={styles.logo}
       />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -33,9 +64,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#DDD5F3",
   },
+  textContainer: {
+    flexDirection: "row", // Ensures letters appear side by side
+    marginBottom: 2, // Adds space between the text and the image
+  },
+  typingText: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#000",
+  },
   logo: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "70%", // Adjust size as needed
     resizeMode: "contain",
   },
 });
