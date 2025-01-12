@@ -1,0 +1,81 @@
+{
+    "categories": {
+      "(CM-3060) NATURAL LANGUAGE PROCESSING": [
+        "token", "lemma", "syntax", "semantics", "entity", "vector", "model", "text",
+        "logic", "parse", "query", "topic", "data", "input", "output", "intent", "label",
+        "pos", "classify", "embed"
+      ],
+      "(CM-3050) MOBILE DEVELOPMENT": [
+        "native", "expo", "app", "ECMA", "input", "device", "touch", "metro",
+        "swipe", "button", "stack", "component", "tab", "state", "module", "debug",
+        "json", "icon", "babel", "api"
+      ],
+      "(CM-3035) ADVANCED WEB DEVELOPMENT": [
+        "web", "design", "style", "html", "css", "js", "async", "code", "fetch",
+        "build", "link", "node", "json", "ajax", "view", "event", "page", "load",
+        "script", "http"
+      ],
+      "(CM-1025) FUNDAMENTALS OF CS": [
+        "logic", "binary", "sort", "list", "tree", "stack", "queue", "data",
+        "code", "input", "array", "loop", "ifelse", "class", "object", "func",
+        "null", "true", "false", "zero"
+      ],
+      "(CM-2015) PROGRAMMING WITH DATA": [
+        "data", "plot", "value", "mean", "axis", "chart", "table", "clean", "sort",
+        "group", "join", "unique", "type", "graph", "line", "mode", "scale",
+        "pivot", "tuple", "index"
+      ],
+      "(CM-2005) OBJECT ORIENTED PROGRAMMING": [
+        "class", "method", "object", "encapsulation", "design", "system", "state",
+        "polymorphism", "data", "logic"
+      ],
+      "(CM-1020) DISCREET MATH": [
+        "logic", "data", "set", "union", "sum", "limit", "value", "input", "level", "symbol"
+      ]
+    },
+    "categoryThemes": {
+      "(CM-3060) NATURAL LANGUAGE PROCESSING": {
+        "background": "bg-purple-100",
+        "button": "bg-purple-500",
+        "text": "text-purple-800",
+        "accent": "text-purple-600"
+      },
+      "(CM-3050) MOBILE DEVELOPMENT": {
+        "background": "bg-blue-100",
+        "button": "bg-blue-500",
+        "text": "text-blue-800",
+        "accent": "text-blue-600"
+      },
+      "(CM-3035) ADVANCED WEB DEVELOPMENT": {
+        "background": "bg-green-100",
+        "button": "bg-green-500",
+        "text": "text-green-800",
+        "accent": "text-green-600"
+      },
+      "(CM-1025) FUNDAMENTALS OF CS": {
+        "background": "bg-yellow-100",
+        "button": "bg-yellow-500",
+        "text": "text-yellow-800",
+        "accent": "text-yellow-600"
+      },
+      "(CM-2015) PROGRAMMING WITH DATA": {
+        "background": "bg-red-100",
+        "button": "bg-red-500",
+        "text": "text-red-800",
+        "accent": "text-red-600"
+      },
+      "(CM-2005) OBJECT ORIENTED PROGRAMMING": {
+        "background": "bg-blue-100",
+        "button": "bg-blue-500",
+        "text": "text-blue-800",
+        "accent": "text-blue-600"
+      },
+      "(CM-1020) DISCREET MATH": {
+        "background": "bg-orange-100",
+        "button": "bg-orange-500",
+        "text": "text-orange-800",
+        "accent": "text-orange-600"
+      }
+    }
+  }
+  
