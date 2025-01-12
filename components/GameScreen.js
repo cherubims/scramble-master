@@ -144,9 +144,11 @@ const GameScreen = ({ route, navigation }) => {
         {allWordsCompleted && (
           <ConfettiCannon
             ref={confettiRef}
-            count={100}
-            origin={{ x: 0, y: 0 }}
+            count={150} // Adjust count for more confetti
+            origin={{ x: 200, y: 0 }} // Adjust origin for better visual effect
             fadeOut={true}
+            explosionSpeed={2000} // Initial burst speed
+            fallSpeed={3500} // Fall speed for realism
           />
         )}
       </View>
