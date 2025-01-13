@@ -4,6 +4,7 @@ import { createStackNavigator, TransitionPresets } from "@react-navigation/stack
 import { Animated, StyleSheet } from "react-native";
 import SplashScreen from "./components/SplashScreen";
 import HomeScreen from "./components/HomeScreen";
+import CategoryScreen from "./components/CategoryScreen";
 import GameScreen from "./components/GameScreen";
 
 const Stack = createStackNavigator();
@@ -37,6 +38,11 @@ const App = () => {
             <Stack.Screen
               name="Home"
               component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Category"
+              component={CategoryScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
