@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Icon from "react-native-vector-icons/Ionicons";
 import tw from "twrnc";
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
+import Icon from "react-native-vector-icons/Ionicons";
 import data from "../assets/data.json";
 import ScreenLayout from "./ScreenLayout";
 import ConfettiCannon from "react-native-confetti-cannon";
@@ -152,19 +152,25 @@ const GameScreen = ({ route, navigation }) => {
           </Text>
         ) : null}
         <TouchableOpacity
-          style={tw`bg-gray-400 py-2 px-4 rounded-lg mt-4 flex-row items-center`}
-          onPress={handleRefresh}
-          activeOpacity={0.8}
-        >
-          <Icon name="refresh" size={20} color="#fff" />
-          <Text style={tw`text-white text-center ml-2`}>Refresh Game</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw`${theme.button} py-2 px-4 rounded-lg mt-6`}
+          style={tw`${theme.button} py-4 px-4 rounded-lg mt-2`}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         >
           <Text style={tw`text-white text-center`}>Change Category</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleRefresh}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={["#DC92EF", "#feb47b"]}
+            start={[0, 0]}
+            end={[1, 0]}
+            style={tw`py-4 px-4 rounded-full mt-4 w-full`}
+          >
+            <Icon name="refresh" size={20} color="#fff" />
+            {/* <Text style={tw`text-white text-center`}>Refresh Game</Text> */}
+          </LinearGradient>
         </TouchableOpacity>
         {allWordsCompleted && (
           <ConfettiCannon
