@@ -30,7 +30,12 @@
     "twrnc": "^4.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "jest-expo": "^52.0.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
   },
   "private": true
 }
