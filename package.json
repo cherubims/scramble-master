@@ -1,5 +1,5 @@
 {
-  "name": "food-recipe-app",
+  "name": "scramble-master",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -33,14 +33,15 @@
     "twrnc": "^4.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "jest-expo": "^52.0.3"
   },
   "jest": {
-    "preset": "react-native",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ]
+    "preset": "jest-expo/universal",
+    "fakeTimers": {
+      "enableGlobabally": true
+    }
   },
   "private": true
 }
