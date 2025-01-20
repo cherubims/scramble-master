@@ -35,13 +35,17 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/react-native": "^13.0.1",
     "jest-expo": "^52.0.3"
   },
   "jest": {
-    "preset": "jest-expo/universal",
-    "fakeTimers": {
-      "enableGlobabally": true
-    }
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|expo|@expo|@react-native|@react-navigation))"
+    ]
   },
+  
+  "type": "module",
   "private": true
 }
