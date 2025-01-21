@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 const SplashScreen = ({ onFinish }) => {
   const [fadeAnim] = useState(new Animated.Value(1)); // Fade for the splash screen
   const fullText = "Scramble Master"; // Splash screen text
-  const typingSpeed = 200; // Typing speed per letter
+  const typingSpeed = 90; // Typing speed per letter
   const letterAnimations = fullText.split("").map(() => ({
     fade: new Animated.Value(0), // Individual fade for each letter
     bounce: new Animated.Value(0), // Individual bounce for each letter
