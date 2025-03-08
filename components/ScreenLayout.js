@@ -17,8 +17,8 @@ const ScreenLayout = ({ children, style }) => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView
-        style={[styles.container, style]} // Allow custom styles
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={[styles.container, style]} // Custom styling
+        behavior={Platform.OS === "ios" ? 100 : 0}
       >
         <ScrollView
           contentContainerStyle={styles.scrollView} // Remove padding
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flexGrow: 1,
+    paddingBottom: -50, // Add padding to avoid overlap
   },
   inner: {
     flex: 1,

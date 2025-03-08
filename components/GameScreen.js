@@ -1,5 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import tw from "twrnc";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,6 +17,7 @@ const GameScreen = ({ route, navigation }) => {
   const { category } = route.params;
   const { categories, categoryThemes } = data;
   const theme = categoryThemes[category];
+
   const [words, setWords] = useState(categories[category]);
   const [originalWord, setOriginalWord] = useState("");
   const [scrambledWord, setScrambledWord] = useState("");
@@ -26,12 +32,8 @@ const GameScreen = ({ route, navigation }) => {
 
   const totalWords = words.length;
 
-  useEffect(() => {
-    loadGlobalStreak();
-    initializeGame();
-  }, []);
-
-  const loadGlobalStreak = async () => {
+  // Memoize loadGlobalStreak with useCallback
+  const loadGlobalStreak = useCallback(async () => {
     try {
       const storedStreaks = await AsyncStorage.getItem("streaks");
       const parsedStreaks = storedStreaks ? JSON.parse(storedStreaks) : {};
@@ -39,9 +41,10 @@ const GameScreen = ({ route, navigation }) => {
     } catch (error) {
       console.error("Error loading streaks:", error);
     }
-  };
+  }, [category, setGlobalStreak]); // Include dependencies
 
-  const saveGlobalStreak = async (newStreak) => {
+  // Memoize saveGlobalStreak with useCallback
+  const saveGlobalStreak = useCallback(async (newStreak) => {
     try {
       const storedStreaks = await AsyncStorage.getItem("streaks");
       const parsedStreaks = storedStreaks ? JSON.parse(storedStreaks) : {};
@@ -50,17 +53,10 @@ const GameScreen = ({ route, navigation }) => {
     } catch (error) {
       console.error("Error saving streaks:", error);
     }
-  };
+  }, [category]); // Include dependencies
 
-  const shuffleWord = (word) => {
-    let shuffled = word;
-    while (shuffled === word) {
-      shuffled = word.split("").sort(() => Math.random() - 0.5).join("");
-    }
-    return shuffled;
-  };
-
-  const initializeGame = () => {
+  // Memoize initializeGame with useCallback
+  const initializeGame = useCallback(() => {
     setCurrentIndex(0);
     setStreak(0);
     setScore(0);
@@ -70,14 +66,28 @@ const GameScreen = ({ route, navigation }) => {
     setOriginalWord(firstWord);
     setScrambledWord(shuffleWord(firstWord));
     setGuess("");
+  }, [words, setCurrentIndex, setStreak, setScore, setMessage, setAllWordsCompleted, setOriginalWord, setScrambledWord, setGuess]); // Include dependencies
+
+  // Shuffle word function
+  const shuffleWord = (word) => {
+    let shuffled = word;
+    while (shuffled === word) {
+      shuffled = word.split("").sort(() => Math.random() - 0.5).join("");
+    }
+    return shuffled;
   };
 
+  // useEffect for initialization
+  useEffect(() => {
+    loadGlobalStreak(); // Load global streak
+    initializeGame(); // Initialize the game
+  }, [loadGlobalStreak, initializeGame]); // Include memoized functions in the dependency array
+
+  // Handle next word
   const handleNextWord = () => {
     if (currentIndex >= words.length - 1) {
       setMessage("You've completed this category! 🎉");
-      if (streak === totalWords) {
-        setAllWordsCompleted(true);
-      }
+      setAllWordsCompleted(true); // Mark the category as completed
       return;
     }
 
@@ -89,8 +99,18 @@ const GameScreen = ({ route, navigation }) => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
+  // Handle check answer
   const handleCheckAnswer = () => {
+    // Prevent further updates if the game is already completed
+    if (allWordsCompleted) {
+      return;
+    }
+
     if (guess.toLowerCase() === originalWord.toLowerCase()) {
+      // Move to the next word before updating the score
+      handleNextWord();
+
+      // Update the score and streak
       setScore((prevScore) => prevScore + 1);
       setStreak((prevStreak) => prevStreak + 1);
       setMessage("Correct! 🎉");
@@ -104,12 +124,9 @@ const GameScreen = ({ route, navigation }) => {
       setMessage(`Incorrect! The word was "${originalWord}".`);
       setStreak(0);
     }
-
-    setTimeout(() => {
-      handleNextWord();
-    }, 1500);
   };
 
+  // Handle refresh
   const handleRefresh = () => {
     initializeGame();
   };
@@ -121,7 +138,7 @@ const GameScreen = ({ route, navigation }) => {
           Category: {category}
         </Text>
         <Text style={tw`text-sm ${theme.accent} mb-4`}>
-          Progress: {currentIndex}/{totalWords}
+          Progress: {currentIndex + 1}/{totalWords} {/* Use currentIndex + 1 for display */}
         </Text>
         <Text style={tw`text-sm ${theme.text} mb-2`}>Score: {score}</Text>
         <Text style={tw`text-sm ${theme.text} mb-6`}>Streak (All-Time): {globalStreak}</Text>
@@ -169,13 +186,12 @@ const GameScreen = ({ route, navigation }) => {
             style={tw`py-4 px-4 rounded-full mt-4 w-full`}
           >
             <Icon name="refresh" size={20} color="#fff" />
-            {/* <Text style={tw`text-white text-center`}>Refresh Game</Text> */}
           </LinearGradient>
         </TouchableOpacity>
         {allWordsCompleted && (
           <ConfettiCannon
             ref={confettiRef}
-            count={150}
+            count={50}
             origin={{ x: 200, y: 0 }}
             fadeOut={true}
             explosionSpeed={2000}

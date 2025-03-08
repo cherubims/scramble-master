@@ -60,7 +60,7 @@ const App = () => {
 const styles = StyleSheet.create({
   animatedContainer: {
     flex: 1,
-    backgroundColor: "#FFF", // Optional: set a background color to avoid flickering
+    backgroundColor: "#FFF", 
   },
 });
 
