@@ -10,7 +10,7 @@ const CategoryScreen = ({ navigation }) => {
   // Define a function to render each category as a button in the list
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.categoryButton}
+      style={styles.categoryButton} // Apply styling for the category button
       onPress={() => navigation.navigate("Game", { category: item })} // Navigate to GameScreen with the selected category as a parameter
       activeOpacity={0.8}
     >
